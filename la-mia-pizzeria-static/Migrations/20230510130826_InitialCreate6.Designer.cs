@@ -11,7 +11,7 @@ using la_mia_pizzeria_static.Models;
 
 namespace la_mia_pizzeria_static.Migrations
 {
-    [DbContext(typeof(PizzeriaContext))]
+    [DbContext(typeof(PizzaContext))]
     [Migration("20230510130826_InitialCreate6")]
     partial class InitialCreate6
     {

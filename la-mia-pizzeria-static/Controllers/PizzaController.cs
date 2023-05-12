@@ -17,7 +17,7 @@ namespace la_mia_pizzeria_static.Controllers
         //se non inserisco [Http...] ci sarà di deafault [HttpGet]
         public IActionResult Index()
         {
-            using (PizzeriaContext context = new PizzeriaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 var pizzas = context.Pizzas.ToList();
 
@@ -33,7 +33,7 @@ namespace la_mia_pizzeria_static.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            using (PizzeriaContext context = new PizzeriaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 List<Category> categories = context.Categories.ToList();
                 List<Ingredient> ingredients = context.Ingredients.ToList();
@@ -69,7 +69,7 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 return View("Create", data);
             }
-            using (PizzeriaContext context = new PizzeriaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 Pizza pizzaCreate = new Pizza();
                 pizzaCreate.Name = data.Pizza.Name;
@@ -101,7 +101,7 @@ namespace la_mia_pizzeria_static.Controllers
         [HttpGet]
         public IActionResult View(int id)
         {
-            using (PizzeriaContext context = new PizzeriaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 Pizza pizza = context.Pizzas.Where(p => p.Id == id).Include(p => p.Category).Include(m => m.Ingredients).FirstOrDefault(); //metodo Include() per recuperare Category e Ingredients assieme a Pizza
 
@@ -115,7 +115,7 @@ namespace la_mia_pizzeria_static.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            using (PizzeriaContext context = new PizzeriaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 //passo i dati per avere i valori degli attributi nella pagina Edit
                 var pizzaEdit = context.Pizzas.Include(m => m.Ingredients).FirstOrDefault(p => p.Id == id);
@@ -156,7 +156,7 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 return View("Edit", data);
             }
-            using (PizzeriaContext context = new PizzeriaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 var pizzaEdit = context.Pizzas.Where(p => p.Id == id).Include(m=>m.Ingredients).FirstOrDefault(); //FirstOrDefaut prende l'id corrispondente e se non lo trova darà null
 
@@ -196,7 +196,7 @@ namespace la_mia_pizzeria_static.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            using (PizzeriaContext context = new PizzeriaContext())
+            using (PizzaContext context = new PizzaContext())
             {
                 var pizzaDelete = context.Pizzas.Where(p => p.Id == id).FirstOrDefault();
 

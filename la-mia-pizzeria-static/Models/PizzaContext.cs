@@ -8,7 +8,7 @@ namespace la_mia_pizzeria_static.Models
     //Comunicare a .NET la configurazione del nostro DB e delle classi da usare
 
     //public class PizzeriaContext : DbContext
-    public class PizzeriaContext : IdentityDbContext<IdentityUser> //il secondo serve ad introdurre il sistema di autenticazione nel db
+    public class PizzaContext : IdentityDbContext<IdentityUser> //il secondo serve ad introdurre il sistema di autenticazione nel db
     {
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Category> Categories { get; set; }

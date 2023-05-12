@@ -10,7 +10,7 @@ using la_mia_pizzeria_static.Models;
 
 namespace la_mia_pizzeria_static.Migrations
 {
-    [DbContext(typeof(PizzeriaContext))]
+    [DbContext(typeof(PizzaContext))]
     partial class PizzeriaContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

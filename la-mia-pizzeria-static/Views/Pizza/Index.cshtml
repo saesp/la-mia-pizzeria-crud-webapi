@@ -1,0 +1,59 @@
+﻿@*@{
+    ViewData["Title"] = "Home Pagee";
+    //<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+}*@
+
+@model List<Pizza>;
+
+
+<div class="container">
+    <h1 class="display-4 mb-4">Le nostre pizze</h1>
+    
+    @if(Model != null)
+    {
+        <ul class="row list-unstyled">
+            @foreach (Pizza pizza in Model)
+            {
+                <li class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="card mb-2">
+                        <h3 class="text-center">@pizza.Name</h3>
+                        <div class="card-body">
+                            <img src="@pizza.Image" class="img-pizza" width="100%" height="250"/>
+
+                            <div class="text-danger mb-1">@pizza.Price €</div>
+
+                            <div class="mb-2">@pizza.Category</div>
+
+                            @*buttons*@
+                            <div class="d-flex justify-content-between">
+
+                                @if (User.IsInRole("ADMIN") || User.IsInRole("USER")) //può visualizzare sia l'user (autenticato) sia l'admin (autenticato e autorizzato)
+                                { 
+                                <a href="@Url.Action("View", "Pizza", new {id= pizza.Id})" class="mr-2"><button class="btn-info rounded-1" width="50"><i class="fa-solid fa-eye"></i></button></a>
+                                }
+
+                                @if (User.IsInRole("ADMIN")) //può visualizzare solo l'admin (autenticato e autorizzato)
+                                { 
+                                <div class="d-flex gap-1 ">
+                                    <a href="@Url.Action("Edit", "Pizza", new {id= pizza.Id})"><button class="btn-danger rounded-1" width="50"><i class="fa-solid fa-pen-to-square"></i></button></a>
+
+                                    <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                
+                                        <button type="submit" class="btn-danger rounded-1" width="50"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+       <div>Lista non trovata.</div>
+    }
+
+</div>

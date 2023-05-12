@@ -1,0 +1,18 @@
+﻿@*@model Pizza;*@
+@*Model == Pizza*@
+
+@model Pizza
+
+<div class="container">
+
+     <div class="d-flex justify-content-between">
+        <div class="">
+            <h1 class="display-4 mb-4">Pizza @Model.Name</h1>
+            <p>@Model.Description</p>
+            <div class="text-danger"><b>Prezzo:</b> @Model.Price €</div>
+        </div>
+        <img class="" src="@Model.Image" width="50%" />
+     </div>
+
+</div>
+

@@ -1,0 +1,54 @@
+﻿@*@model Pizza*@
+@model PizzaFormModel
+
+<div class="container">
+
+    <form asp-controller="Pizza" asp-action="Edit" method="post" asp-route-id="@Model.Pizza.Id">
+        @Html.AntiForgeryToken()
+
+        @* i valori degli attributi vengono scritti in automatico grazie ad "asp-for" senza il bisogno quindi di aggiungere "value=..." *@
+        <div class="mb-3">
+            <strong>Nome:</strong>
+            <input asp-for="Pizza.Name" class="d-block w-100"/>
+            <span asp-validation-for="Pizza.Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Descrizione:</strong>
+            <textarea asp-for="Pizza.Description" class="d-block w-100" rows="5"></textarea>
+            <span asp-validation-for="Pizza.Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Immagine:</strong>
+            <input asp-for="Pizza.Image" class="d-block w-100"/>
+            <span asp-validation-for="Pizza.Image" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Prezzo:</strong>
+            <input asp-for="Pizza.Price" class="d-block w-100"/>
+            <span asp-validation-for="Pizza.Price" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <strong>Categoria:</strong>
+            <select asp-for="Pizza.CategoryId">
+                <option value="">Scegli</option>  @*la condizione per la visualizzazione del 'selected' non serve, avviene in automatico*@
+                @foreach(Category category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <strong>Ingredienti:</strong>
+            <label for="option1">Option 1:</label>
+<input type="checkbox" id="option1" name="options" value="option1">
+
+            <select asp-for="SelectIngredients" multiple="multiple" size="5" asp-items="@Model.Ingredients"></select>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn-dark">Modifica pizza</button>
+        </div>
+
+    </form>
+
+</div>

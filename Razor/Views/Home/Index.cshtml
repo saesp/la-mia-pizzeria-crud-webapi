@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+    var myFirstname = "Salvatore";
+    var myLastname = "Esposito"; 
+
+    int Sum(int n)
+    {
+        int sum = 0;
+
+        for(int i=0; i<n; i++)
+        {
+            sum += i;
+        }
+
+        return sum;
+    }
+
+
+    int countLetter(string phrase, char letter){
+        int count = 0;
+        @foreach(char lett in phrase)
+        {
+            if(lett == letter)
+            {
+               count += 1;   
+            }
+        }
+        return count; 
+    }
+
+    List<int> numbers = new List<int>(); 
+    for(int i = 0; i<20; i++)
+    {
+        Random random = new Random();
+        int randomNumber = random.Next(1, 90);
+
+        numbers.Add(randomNumber); 
+    }
+
+    string WriteDateTime()
+    {
+        DateTime now = DateTime.Now;
+        return now.ToString("yyyy/MM/dd HH:mm:ss");
+    }
+}
+
+
+<div class="text-center">
+   <h2>@myFirstname @myLastname</h2>
+
+   <div class="mb-2">Somma dei numeri che vanno da 1 a 5: <span class="text-danger">@Sum(5)</span>.</div>
+
+   <div class="mb-2">La frase "Nel mezzo del cammin di nostra vita" ha <span class="text-danger">@countLetter("Nel mezzo del cammin di nostra vita", 'a')</span> lettere 'a'.</div>
+
+    <div class="mb-2">
+       <div><strong>Lista numeri da 20 a 70:</strong></div>
+
+        @foreach(int num in numbers)
+        {
+            @if(num>=20 && num <= 70)
+                {
+                    <span>@num,</span>
+                }
+        }
+    </div>
+
+    <div>
+       <div><strong>Data ed ora attuale:</strong></div>
+        
+        @WriteDateTime()
+    </div>
+
+ 
+</div>

@@ -73,5 +73,29 @@ namespace la_mia_pizzeria_static.Controllers.API
                 }
             }
         }
+
+
+        //DELETE
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            using (PizzaContext context = new PizzaContext())
+            {
+                Pizza profileDelete = context.Pizzas
+                .Where(profile => profile.Id == id).FirstOrDefault();
+                if (profileDelete != null)
+                {
+                    context.Pizzas.Remove(profileDelete);
+
+                    context.SaveChanges();
+
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
     }
 }

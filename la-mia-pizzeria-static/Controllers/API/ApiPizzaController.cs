@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace la_mia_pizzeria_static.Controllers.API
-{
+{ 
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class ApiPizzaController : ControllerBase //ControllerBase offre metodi e proprietà utili per la gestione delle richieste e risposte HTTP 
@@ -45,28 +46,32 @@ namespace la_mia_pizzeria_static.Controllers.API
         }
 
 
-        ////PUT
-        //[HttpPut("{id}")]
-        //public IActionResult Update(int id, [FromBody] Pizza data)
-        //{
-        //    using (PizzaContext context = new PizzaContext())
-        //    {
-        //        // cerchiamo il dato
-        //        PizzaContext pizzaEdit = context.PizzaContexts
-        //        .Where(pizza => pizza.Id == id).FirstOrDefault();
-        //        if (pizzaEdit != null)
-        //        {
-        //            //---
+        //PUT
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, [FromBody] Pizza data)
+        {
+            using (PizzaContext context = new PizzaContext())
+            {
+                var pizzaEdit = context.Pizzas.Where(p => p.Id == id).Include(m => m.Ingredients).FirstOrDefault();
 
+                if (pizzaEdit != null)
+                {
+                    pizzaEdit.Name = data.Name;
+                    pizzaEdit.Description = data.Description;
+                    pizzaEdit.Image = data.Image;
+                    pizzaEdit.Price = data.Price;
+                    pizzaEdit.CategoryId = data.CategoryId;
 
-        //            return Ok();
-        //        }
-        //        else
-        //        {
-        //            // se non è stato trovato resituiamo che non esiste
-        //            return NotFound();
-        //        }
-        //    }
-        //}
+                    context.SaveChanges();
+
+                    return Ok();
+                }
+                else
+                {
+                    // se non è stato trovato resituiamo che non esiste
+                    return NotFound();
+                }
+            }
+        }
     }
 }

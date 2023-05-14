@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace la_mia_pizzeria_static
+namespace la_mia_pizzeria_static.Models
 {
     public class Ingredient
     {

@@ -38,7 +38,14 @@
         </div>
         <div class="mb-3">
             <strong>Ingredienti:</strong>
-            <select asp-for="SelectIngredients" multiple="multiple" size="5" asp-items="@Model.Ingredients"></select>
+            @foreach (var ingredient in Model.Ingredients)
+            {
+                <div>
+                    <input type="checkbox" name="SelectIngredients" value="@ingredient.Value" id="@ingredient.Value" />
+                    <label for="@ingredient.Value">@ingredient.Text</label>
+                </div>
+            }
+            @*<select asp-for="SelectIngredients" multiple="multiple" size="5" asp-items="@Model.Ingredients"></select>*@
         </div>
 
         <div class="text-end">

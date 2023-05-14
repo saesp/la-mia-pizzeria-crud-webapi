@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace la_mia_pizzeria_static
+namespace la_mia_pizzeria_static.Models
 {
     public class Category
     {
@@ -15,6 +15,6 @@ namespace la_mia_pizzeria_static
         public string? Description { get; set; }
 
         public List<Category> Categories { get; set; }
-        
+
     }
 }

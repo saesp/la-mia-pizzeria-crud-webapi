@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace la_mia_pizzeria_static.Controllers
 {

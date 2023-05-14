@@ -9,7 +9,19 @@
         <div class="">
             <h1 class="display-4 mb-4">Pizza @Model.Name</h1>
             <p>@Model.Description</p>
-            <div class="text-danger"><b>Prezzo:</b> @Model.Price €</div>
+            <div class="text-danger"><b>Prezzo: </b> @Model.Price €</div>
+            <div><b>Nome categoria: </b>@Model.Category.Name</div>
+            <div class="mb-2">Ingredienti:
+                @if(Model.Ingredients != null)
+                {
+                    <ul>
+                        @foreach (Ingredient ingredient in Model.Ingredients)
+                        {
+                            <li>@ingredient.Name</li>
+                        }
+                    </ul>
+                }
+            </div>
         </div>
         <img class="" src="@Model.Image" width="50%" />
      </div>

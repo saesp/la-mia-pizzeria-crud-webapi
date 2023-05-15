@@ -21,6 +21,11 @@
                             <img src="@pizza.Image" class="img-pizza" width="100%" height="250"/>
 
                             <div class="text-danger mb-1">@pizza.Price €</div>
+                            
+                            @if (pizza.Category != null)
+                            {
+                                <div class="mb-1"><b>Categoria: </b> @pizza.Category.Name</div>
+                            }
 
                             @*buttons*@
                             <div class="d-flex justify-content-between">

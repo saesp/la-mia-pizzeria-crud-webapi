@@ -26,17 +26,28 @@ namespace la_mia_pizzeria_static.Controllers.API
 
         //POST
         [HttpPost]
-        public IActionResult Create([FromBody] Pizza data)
+        public IActionResult Create([FromBody] PizzaFormModel data)
         {
             using (PizzaContext context = new PizzaContext())
             {
                 Pizza pizzaCreate = new Pizza();
-                pizzaCreate.Name = data.Name;
-                pizzaCreate.Description = data.Description;
-                pizzaCreate.Image = data.Image;
-                pizzaCreate.Price = data.Price;
-                pizzaCreate.CategoryId = data.CategoryId; //one to many
-                
+                pizzaCreate.Name = data.Pizza.Name;
+                pizzaCreate.Description = data.Pizza.Description;
+                pizzaCreate.Image = data.Pizza.Image;
+                pizzaCreate.Price = data.Pizza.Price;
+                pizzaCreate.CategoryId = data.Pizza.CategoryId; //one to many
+                pizzaCreate.Ingredients = new List<Ingredient>(); //many to many
+                if (data.SelectIngredients != null)
+                {
+                    foreach (string selectedIngredientId in data.SelectIngredients) //per ogni Id di ingredienti selezionati
+                    {
+                        int selectedIntIngredientId = int.Parse(selectedIngredientId); //Parse() converte da un tipo all'altro (in questo caso l'Id string (messo da View) a Id int
+                        Ingredient ingredient = context.Ingredients.Where(m => m.Id == selectedIntIngredientId).FirstOrDefault(); //ricerca e selezione dell'Id model corrispondente all'Id view 
+
+                        pizzaCreate.Ingredients.Add(ingredient); //aggiunta dell'Id selezionato alla lista Ingredients
+                    }
+                }
+
                 context.Pizzas.Add(pizzaCreate);
                 context.SaveChanges();
 
@@ -81,11 +92,11 @@ namespace la_mia_pizzeria_static.Controllers.API
         {
             using (PizzaContext context = new PizzaContext())
             {
-                Pizza profileDelete = context.Pizzas
-                .Where(profile => profile.Id == id).FirstOrDefault();
-                if (profileDelete != null)
+                Pizza pizzaDelete = context.Pizzas
+                .Where(p => p.Id == id).FirstOrDefault();
+                if (pizzaDelete != null)
                 {
-                    context.Pizzas.Remove(profileDelete);
+                    context.Pizzas.Remove(pizzaDelete);
 
                     context.SaveChanges();
 

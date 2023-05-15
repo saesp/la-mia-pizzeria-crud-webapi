@@ -20,7 +20,7 @@ namespace la_mia_pizzeria_static.Controllers
         {
             using (PizzaContext context = new PizzaContext())
             {
-                var pizzas = context.Pizzas.ToList();
+                var pizzas = context.Pizzas.Include(p => p.Category).Include(p => p.Ingredients).ToList(); //ToList() trasforma una sequenza di elementi in una lista 
 
                 return View(pizzas);
             }
@@ -104,7 +104,7 @@ namespace la_mia_pizzeria_static.Controllers
         {
             using (PizzaContext context = new PizzaContext())
             {
-                Pizza pizza = context.Pizzas.Where(p => p.Id == id).Include(p => p.Category).Include(m => m.Ingredients).FirstOrDefault(); //metodo Include() per recuperare Category e Ingredients assieme a Pizza
+                Pizza pizza = context.Pizzas.Where(p => p.Id == id).Include(p => p.Category).Include(p => p.Ingredients).FirstOrDefault(); //metodo Include() per recuperare Category e Ingredients assieme a Pizza
 
                 return View(pizza);
             }
@@ -170,6 +170,8 @@ namespace la_mia_pizzeria_static.Controllers
                     pizzaEdit.CategoryId = data.Pizza.CategoryId;
                     if (data.SelectIngredients != null) //many to many
                     {
+                        pizzaEdit.Ingredients.Clear(); //Clear() rimuove tutti gli elementi in una lista (in quest caso permette di togliere la selezione degli ingredienti)
+
                         foreach (string selectedIngredientId in data.SelectIngredients)
                         {
                             int selectedIntIngredientId = int.Parse(selectedIngredientId);
